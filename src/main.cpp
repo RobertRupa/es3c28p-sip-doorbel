@@ -4,6 +4,7 @@
 #include <lvgl.h>
 #include <esp_timer.h>
 #include <esp_system.h>
+#include <esp_heap_caps.h>
 #include "board_config.h"
 #include "display.h"
 #include "settings.h"
@@ -70,7 +71,17 @@ static void provisionAdminFromSerial(){
    if(line.startsWith("ADMIN ")&&line.length()>=14){
     Preferences p;p.begin("doorbell",false);p.putString("admin",line.substring(6));p.end();
     loadSettings();Serial.println("[ADMIN] Password provisioned");
-   }else if(line=="HELP")Serial.println("Use ADMIN <strong-password> to provision WebGUI; do not paste password into remote logs.");
+   }else if(line.startsWith("WIFI ")&&line.length()>6){
+    int sep=line.indexOf(' ',5);
+    if(sep>5){
+     String ssid=line.substring(5,sep),pass=line.substring(sep+1);
+     if(ssid.length()<=32 && pass.length()<=63){
+      Preferences p;p.begin("doorbell",false);p.putString("ssid",ssid);p.putString("wifi",pass);p.end();
+      loadSettings();WiFi.disconnect();WiFi.begin(settings.ssid.c_str(),settings.password.c_str());
+      Serial.println("[WIFI] Credentials provisioned; connecting");
+     }
+    }
+   }else if(line=="HELP")Serial.println("Commands: ADMIN <password> | WIFI <ssid> <password> (USB local only).");
    line="";
   }else if(line.length()<140)line+=ch;
  }
