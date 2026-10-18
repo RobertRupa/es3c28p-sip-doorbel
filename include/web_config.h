@@ -7,7 +7,7 @@
 #include "access_client.h"
 inline WebServer web(80);
 inline String escHtml(const String &s){
- String r;for(char c:s){if(c=='&')r+="&amp;";else if(c=='<')r+="&lt;";else if(c=='>')r+="&gt;";else if(c=='"')r+="&quot;";else r+=c;}return r;
+ String r;for(size_t i=0;i<s.length();++i){char c=s[i];if(c=='&')r+="&amp;";else if(c=='<')r+="&lt;";else if(c=='>')r+="&gt;";else if(c=='"')r+="&quot;";else r+=c;}return r;
 }
 inline bool authorized(){
  if(settings.adminPassword.isEmpty()){web.send(503,"text/plain","Set admin password over USB serial provisioning before enabling WebGUI");return false;}
