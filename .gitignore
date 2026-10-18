@@ -1,0 +1,9 @@
+.pio/
+.vscode/.browse.c_cpp.db*
+.vscode/ipch/
+*.bin
+*.elf
+sdkconfig
+sdkconfig.old
+.env
+secrets.h
