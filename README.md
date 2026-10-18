@@ -19,7 +19,7 @@ pio run -e es3c28p -t upload --upload-port /dev/ttyACM0
 pio device monitor -p /dev/ttyACM0 -b 115200
 ```
 
-Przy pierwszym uruchomieniu na lokalnym monitorze USB wyślij `ADMIN mocne-haslo-do-panelu`. Po ustawieniu Wi-Fi wejdź na `http://IP_ESP32/`, login `admin`. Aby skonfigurować Wi-Fi po raz pierwszy, tymczasowo provisionuj SSID przez NVS lub dołóż captive portal; formularz WebGUI wymaga już połączenia sieciowego.
+Przy pierwszym uruchomieniu na lokalnym monitorze USB wyślij `ADMIN mocne-haslo-do-panelu` oraz `WIFI moja-siec moje-haslo` (SSID z odstępami nie jest obecnie obsługiwane). Po ustawieniu Wi-Fi wejdź na `http://IP_ESP32/`, login `admin`. Pierwsze dane Wi-Fi wprowadzaj przez USB. Formularz WebGUI wymaga już połączenia sieciowego.
 
 ## Co jeszcze nie działa
 - Logowanie SIP Digest do normalnej centrali; połączenia przychodzące i wychodzące; RTP/G.711 i audio pełnodupleksowe ES8311.
